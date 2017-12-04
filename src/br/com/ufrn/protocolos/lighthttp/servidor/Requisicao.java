@@ -9,6 +9,7 @@ import java.util.Date;
 import br.com.ufrn.protocolos.lighthttp.enumeradores.StatusEnum;
 import br.com.ufrn.protocolos.lighthttp.requisicao.MensagemRequisicao;
 import br.com.ufrn.protocolos.lighthttp.utils.ArquivoUtil;
+import br.com.ufrn.protocolos.lighthttp.utils.ArrayUtils;
 import br.com.ufrn.protocolos.lighthttp.validacao.ArquivoValida;
 import br.com.ufrn.protocolos.lighthttp.validacao.TipoRequisicaoValida;
 
@@ -18,10 +19,10 @@ public class Requisicao extends Thread  {
 	private Socket socket;
 	private StatusEnum status;
 	private String tipoArquivo;
-	private String conteudo;
+	private byte[] conteudo;
 	private ArquivoUtil arquivoUtil;
 
-	public Requisicao(int limite, Socket socket, StatusEnum status, String conteudo) {
+	public Requisicao(int limite, Socket socket, StatusEnum status, byte[] conteudo) {
 		super();
 		this.limite = limite;
 		this.socket = socket;
@@ -34,7 +35,7 @@ public class Requisicao extends Thread  {
 		super();
 		this.socket = socket;
 		this.limite = limite;
-		this.conteudo = "";
+		this.conteudo = null;
 		this.arquivoUtil = new ArquivoUtil();
 	}
 
@@ -67,17 +68,17 @@ public class Requisicao extends Thread  {
 			} else {
 				status = StatusEnum.NOT_FOUND;
 				tipoArquivo = "text/plain";
-				conteudo = "ERROR 404 - RECURSO NAO ENCONTRADO";
+				conteudo = "ERROR 404 - RECURSO NAO ENCONTRADO".getBytes();
 				System.out.println(status);
 			}				
 		} else {
 			status = StatusEnum.NOT_IMPLEMENTED;
 		}
 		
-		String resposta = montaMensagemResposta(status, tipoArquivo, conteudo);
+		byte[] resposta = montaMensagemResposta(status, tipoArquivo, conteudo);
 		
 		DataOutputStream outBytes = new DataOutputStream(socket.getOutputStream());
-		outBytes.write(resposta.getBytes());
+		outBytes.write(resposta);
 		
 		System.out.println("----------------------SERVER RESPONDE ---------------------");
 		System.out.println(resposta);
@@ -87,13 +88,15 @@ public class Requisicao extends Thread  {
 	}
 
 	
-	public String montaMensagemResposta(StatusEnum status, String tipoArquivo, String conteudo) {
-		String mensagemResposta = "";		
-		mensagemResposta += "HTTP/1.1 " + status.status + " " + status.descricao + "\r\n";
-		mensagemResposta += "Date: " + new Date() + "\r\n";
-		mensagemResposta += "Content-Type: " + tipoArquivo + ";\r\n";		
-		mensagemResposta += "\r\n";
-		mensagemResposta += conteudo;
+	public byte[] montaMensagemResposta(StatusEnum status, String tipoArquivo, byte[] conteudo) {
+		String inicioMensagemResposta = "";		
+		inicioMensagemResposta += "HTTP/1.1 " + status.status + " " + status.descricao + "\r\n";
+		inicioMensagemResposta += "Date: " + new Date() + "\r\n";
+		inicioMensagemResposta += "Content-Type: " + tipoArquivo + ";\r\n";		
+		inicioMensagemResposta += "\r\n";
+		
+		byte[] mensagemResposta = ArrayUtils.concatenaArraysBytes(inicioMensagemResposta.getBytes(), conteudo);
+		
 		return mensagemResposta;
 	}
 }

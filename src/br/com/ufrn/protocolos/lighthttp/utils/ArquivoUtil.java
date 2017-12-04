@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class ArquivoUtil {
 
-	private String conteudo;
+	private byte[] conteudo;
 	private String caminhoArquivo;
 	private String extensao;
 	
@@ -18,7 +18,7 @@ public class ArquivoUtil {
 
 	public ArquivoUtil() {
 		super();
-		this.conteudo = "";
+		this.conteudo = null;
 		this.caminhoArquivo = "";
 		this.extensao = "";
 		pesquisaExtensao();
@@ -27,7 +27,7 @@ public class ArquivoUtil {
 
 	public ArquivoUtil(String conteudo, String caminhoArquivo) {
 		super();
-		this.conteudo = conteudo;
+		this.conteudo = null;
 		this.caminhoArquivo = caminhoArquivo;
 		this.extensao = "";
 		pesquisaExtensao();
@@ -37,7 +37,7 @@ public class ArquivoUtil {
 	public ArquivoUtil(String caminhoArquivo) {
 		super();
 		this.caminhoArquivo = caminhoArquivo;
-		this.conteudo = "";
+		this.conteudo = null;
 		this.extensao = "";
 		populaTiposArquivo();
 	}
@@ -61,11 +61,10 @@ public class ArquivoUtil {
 		this.extensao = extensao;
 	}
 
-	public String getConteudo() {
-		Scanner scanner = null;
+	public byte[] getConteudo() {
 		String caminhoCompletoArquivo = "http_docs" + caminhoArquivo;
 		
-		conteudo = new String(fileToByte(new File(caminhoCompletoArquivo)));
+		conteudo = fileToByte(new File(caminhoCompletoArquivo));
 		
 //		try {
 //			scanner = new Scanner(new InputStreamReader(new FileInputStream(caminhoCompletoArquivo)));
@@ -88,7 +87,8 @@ public class ArquivoUtil {
 		pesquisaExtensao();
 	}
 
-	public void setConteudo(String conteudo) {
+
+	public void setConteudo(byte[] conteudo) {
 		this.conteudo = conteudo;
 	}
 
