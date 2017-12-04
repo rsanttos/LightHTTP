@@ -1,0 +1,111 @@
+<code><span id="LC1" class="line" lang="java"><span class="kn">package</span> <span class="n">br</span><span class="o">.</span><span class="na">edu</span><span class="o">.</span><span class="na">ecowalk</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">ecowalkapi</span><span class="o">;</span></span>
+<span id="LC2" class="line" lang="java"></span>
+<span id="LC3" class="line" lang="java"><span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span></span>
+<span id="LC4" class="line" lang="java"><span class="kn">import</span> <span class="nn">java.io.FileNotFoundException</span><span class="o">;</span></span>
+<span id="LC5" class="line" lang="java"><span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span></span>
+<span id="LC6" class="line" lang="java"><span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span></span>
+<span id="LC7" class="line" lang="java"><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span></span>
+<span id="LC8" class="line" lang="java"><span class="kn">import</span> <span class="nn">java.util.StringTokenizer</span><span class="o">;</span></span>
+<span id="LC9" class="line" lang="java"></span>
+<span id="LC10" class="line" lang="java"><span class="kn">import</span> <span class="nn">br.edu.ecowalk.api.ecowalkapi.modelo.Artefato</span><span class="o">;</span></span>
+<span id="LC11" class="line" lang="java"><span class="kn">import</span> <span class="nn">br.edu.ecowalk.api.ecowalkapi.modelo.Flora</span><span class="o">;</span></span>
+<span id="LC12" class="line" lang="java"><span class="kn">import</span> <span class="nn">br.edu.ecowalk.api.ecowalkapi.service.ArtefatoService</span><span class="o">;</span></span>
+<span id="LC13" class="line" lang="java"><span class="kn">import</span> <span class="nn">br.edu.ecowalk.api.ecowalkapi.service.FloraService</span><span class="o">;</span></span>
+<span id="LC14" class="line" lang="java"></span>
+<span id="LC15" class="line" lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PopulaFlora</span> <span class="o">{</span></span>
+<span id="LC16" class="line" lang="java"></span>
+<span id="LC17" class="line" lang="java">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">popula</span><span class="o">(</span><span class="n">ArtefatoService</span> <span class="n">artefatoService</span><span class="o">,</span> <span class="n">FloraService</span> <span class="n">floraService</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span></span>
+<span id="LC18" class="line" lang="java">		<span class="c1">// TODO Auto-generated method stub</span></span>
+<span id="LC19" class="line" lang="java">		<span class="c1">// String caminhoArquivoFlora = "/home/ramonsantos/Documents/ecowalk_flora.csv";</span></span>
+<span id="LC20" class="line" lang="java">		<span class="c1">// String caminhoArquivoFlora =</span></span>
+<span id="LC21" class="line" lang="java">		<span class="c1">// "D:\\Users\\f043684\\Desktop\\Pessoal\\docs\\ecowalk_flora.csv";</span></span>
+<span id="LC22" class="line" lang="java">		<span class="n">String</span> <span class="n">caminhoArquivoFlora</span> <span class="o">=</span> <span class="s">"/home/ramonsantos/dev/ecowalk/ecowalkjar/docs/ecowalk_flora_v3.csv"</span><span class="o">;</span></span>
+<span id="LC23" class="line" lang="java">		<span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span></span>
+<span id="LC24" class="line" lang="java"></span>
+<span id="LC25" class="line" lang="java">		<span class="k">try</span> <span class="o">{</span></span>
+<span id="LC26" class="line" lang="java">			<span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">caminhoArquivoFlora</span><span class="o">),</span> <span class="s">"UTF-8"</span><span class="o">))</span></span>
+<span id="LC27" class="line" lang="java">					<span class="o">.</span><span class="na">useDelimiter</span><span class="o">(</span><span class="s">"\n"</span><span class="o">);</span></span>
+<span id="LC28" class="line" lang="java">			<span class="kt">int</span> <span class="n">contaLinha</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
+<span id="LC29" class="line" lang="java">			<span class="k">while</span> <span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">hasNextLine</span><span class="o">())</span> <span class="o">{</span></span>
+<span id="LC30" class="line" lang="java">				<span class="n">String</span> <span class="n">linha</span> <span class="o">=</span> <span class="n">scanner</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span></span>
+<span id="LC31" class="line" lang="java">				<span class="n">String</span> <span class="n">delimitador</span> <span class="o">=</span> <span class="s">"\t"</span><span class="o">;</span></span>
+<span id="LC32" class="line" lang="java">				<span class="n">StringTokenizer</span> <span class="n">st</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringTokenizer</span><span class="o">(</span><span class="n">linha</span><span class="o">,</span> <span class="n">delimitador</span><span class="o">);</span></span>
+<span id="LC33" class="line" lang="java"></span>
+<span id="LC34" class="line" lang="java">				<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span></span>
+<span id="LC35" class="line" lang="java">				<span class="n">Artefato</span> <span class="n">artefato</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Artefato</span><span class="o">();</span></span>
+<span id="LC36" class="line" lang="java">				<span class="n">Flora</span> <span class="n">flora</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Flora</span><span class="o">();</span></span>
+<span id="LC37" class="line" lang="java">				<span class="k">while</span> <span class="o">(</span><span class="n">st</span><span class="o">.</span><span class="na">hasMoreElements</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="o">)</span> <span class="o">{</span></span>
+<span id="LC38" class="line" lang="java">					<span class="k">switch</span> <span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span></span>
+<span id="LC39" class="line" lang="java">					<span class="k">case</span> <span class="mi">1</span><span class="o">:</span></span>
+<span id="LC40" class="line" lang="java">						<span class="n">String</span> <span class="n">latitude</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">();</span></span>
+<span id="LC41" class="line" lang="java">						<span class="n">artefato</span><span class="o">.</span><span class="na">setLatitude</span><span class="o">(</span><span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">latitude</span><span class="o">));</span></span>
+<span id="LC42" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC43" class="line" lang="java">					<span class="k">case</span> <span class="mi">2</span><span class="o">:</span></span>
+<span id="LC44" class="line" lang="java">						<span class="n">String</span> <span class="n">longitude</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">();</span></span>
+<span id="LC45" class="line" lang="java">						<span class="n">artefato</span><span class="o">.</span><span class="na">setLongitude</span><span class="o">(</span><span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">longitude</span><span class="o">));</span></span>
+<span id="LC46" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC47" class="line" lang="java">					<span class="k">case</span> <span class="mi">3</span><span class="o">:</span></span>
+<span id="LC48" class="line" lang="java">						<span class="n">artefato</span><span class="o">.</span><span class="na">setTitulo</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC49" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC50" class="line" lang="java">					<span class="k">case</span> <span class="mi">4</span><span class="o">:</span></span>
+<span id="LC51" class="line" lang="java">						<span class="n">artefato</span><span class="o">.</span><span class="na">setSubTitulo</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC52" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC53" class="line" lang="java">					<span class="k">case</span> <span class="mi">5</span><span class="o">:</span></span>
+<span id="LC54" class="line" lang="java">						<span class="n">String</span> <span class="n">idTipoArtefato</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">();</span></span>
+<span id="LC55" class="line" lang="java">						<span class="n">artefato</span><span class="o">.</span><span class="na">setTipoArtefato</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">idTipoArtefato</span><span class="o">));</span></span>
+<span id="LC56" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC57" class="line" lang="java">					<span class="k">case</span> <span class="mi">6</span><span class="o">:</span></span>
+<span id="LC58" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setFamilia</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC59" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC60" class="line" lang="java">					<span class="k">case</span> <span class="mi">7</span><span class="o">:</span></span>
+<span id="LC61" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setNomeCientifico</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC62" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC63" class="line" lang="java">					<span class="k">case</span> <span class="mi">8</span><span class="o">:</span></span>
+<span id="LC64" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setNomePopular</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC65" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC66" class="line" lang="java">					<span class="k">case</span> <span class="mi">9</span><span class="o">:</span></span>
+<span id="LC67" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setUtilizacao</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC68" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC69" class="line" lang="java">					<span class="k">case</span> <span class="mi">10</span><span class="o">:</span></span>
+<span id="LC70" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setOcorrencia</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC71" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC72" class="line" lang="java">					<span class="k">case</span> <span class="mi">11</span><span class="o">:</span></span>
+<span id="LC73" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setFenologia</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC74" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC75" class="line" lang="java">					<span class="k">case</span> <span class="mi">12</span><span class="o">:</span></span>
+<span id="LC76" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setInteracoesEcologicas</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC77" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC78" class="line" lang="java">					<span class="k">case</span> <span class="mi">13</span><span class="o">:</span></span>
+<span id="LC79" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setDescricaoGeral</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC80" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC81" class="line" lang="java">					<span class="k">case</span> <span class="mi">14</span><span class="o">:</span></span>
+<span id="LC82" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setReferenciasBibliograficas</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">nextElement</span><span class="o">());</span></span>
+<span id="LC83" class="line" lang="java">						<span class="k">break</span><span class="o">;</span></span>
+<span id="LC84" class="line" lang="java">					<span class="o">}</span></span>
+<span id="LC85" class="line" lang="java">					<span class="n">i</span><span class="o">++;</span></span>
+<span id="LC86" class="line" lang="java">				<span class="o">}</span></span>
+<span id="LC87" class="line" lang="java">				<span class="k">if</span> <span class="o">(!</span><span class="n">artefato</span><span class="o">.</span><span class="na">getTitulo</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span></span>
+<span id="LC88" class="line" lang="java">					<span class="k">try</span> <span class="o">{</span></span>
+<span id="LC89" class="line" lang="java">						<span class="c1">// salva artefato</span></span>
+<span id="LC90" class="line" lang="java">						<span class="n">artefatoService</span><span class="o">.</span><span class="na">salvar</span><span class="o">(</span><span class="n">artefato</span><span class="o">);</span></span>
+<span id="LC91" class="line" lang="java">						<span class="c1">// salva flora</span></span>
+<span id="LC92" class="line" lang="java">						<span class="n">flora</span><span class="o">.</span><span class="na">setArtefato</span><span class="o">(</span><span class="n">artefato</span><span class="o">);</span></span>
+<span id="LC93" class="line" lang="java">						<span class="n">floraService</span><span class="o">.</span><span class="na">salvar</span><span class="o">(</span><span class="n">flora</span><span class="o">);</span></span>
+<span id="LC94" class="line" lang="java">					<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span></span>
+<span id="LC95" class="line" lang="java">						<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">linha</span><span class="o">);</span></span>
+<span id="LC96" class="line" lang="java">						<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span></span>
+<span id="LC97" class="line" lang="java">					<span class="o">}</span></span>
+<span id="LC98" class="line" lang="java">				<span class="o">}</span></span>
+<span id="LC99" class="line" lang="java">				<span class="n">contaLinha</span><span class="o">++;</span></span>
+<span id="LC100" class="line" lang="java">			<span class="o">}</span></span>
+<span id="LC101" class="line" lang="java">		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span></span>
+<span id="LC102" class="line" lang="java">			<span class="c1">// TODO Auto-generated catch block</span></span>
+<span id="LC103" class="line" lang="java">			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"ERRO: O arquivo não pôde ser lido!"</span><span class="o">);</span></span>
+<span id="LC104" class="line" lang="java">			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span></span>
+<span id="LC105" class="line" lang="java">		<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span></span>
+<span id="LC106" class="line" lang="java">			<span class="n">scanner</span><span class="o">.</span><span class="na">close</span><span class="o">();</span></span>
+<span id="LC107" class="line" lang="java">		<span class="o">}</span></span>
+<span id="LC108" class="line" lang="java"></span>
+<span id="LC109" class="line" lang="java">	<span class="o">}</span></span>
+<span id="LC110" class="line" lang="java"></span>
+<span id="LC111" class="line" lang="java"><span class="o">}</span></span></code>
