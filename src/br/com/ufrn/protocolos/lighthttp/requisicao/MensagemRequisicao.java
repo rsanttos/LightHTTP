@@ -16,13 +16,13 @@ public class MensagemRequisicao {
 	public void define() {
 		
 		int i = 0;
-		while(mensagem.charAt(i) != ' ') {
+		while(i < mensagem.length() && mensagem.charAt(i) != ' ') {
 			tipo += mensagem.charAt(i);
 			i++;
 		}
 
 		i++;
-		while(mensagem.charAt(i) != ' ') {
+		while(i < mensagem.length() && mensagem.charAt(i) != ' ') {
 			recurso += mensagem.charAt(i);
 			i++;
 		}

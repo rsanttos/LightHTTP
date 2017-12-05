@@ -48,7 +48,6 @@ public class ArquivoUtil {
 			for (int i = posicao; i < caminhoArquivo.length(); i++) {
 				extensao += caminhoArquivo.charAt(i);
 			}
-			System.out.println(extensao);
 		}
 	}
 

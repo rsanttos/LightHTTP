@@ -68,11 +68,12 @@ public class Requisicao extends Thread  {
 			} else {
 				status = StatusEnum.NOT_FOUND;
 				tipoArquivo = "text/plain";
-				conteudo = "ERROR 404 - RECURSO NAO ENCONTRADO".getBytes();
-				System.out.println(status);
+				conteudo = "ERROR 404 - RECURSO NAO ENCONTRADO".getBytes();				
 			}				
 		} else {
 			status = StatusEnum.NOT_IMPLEMENTED;
+			tipoArquivo = "text/plain";			
+			conteudo = "ERROR 501 - TIPO DE REQUISICAO NAO IMPLEMENTADO".getBytes();
 		}
 		
 		byte[] resposta = montaMensagemResposta(status, tipoArquivo, conteudo);
@@ -81,7 +82,8 @@ public class Requisicao extends Thread  {
 		outBytes.write(resposta);
 		
 		System.out.println("----------------------SERVER RESPONDE ---------------------");
-		System.out.println(resposta);
+		System.out.println(new String(resposta));
+		resposta = null;
 		System.out.println("-----------------------------------------------------------");
 		
 		socket.close();
